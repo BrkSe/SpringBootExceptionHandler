@@ -2,8 +2,12 @@ package com.burakkutbay.springbootexceptionhandler.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.servlet.NoHandlerFoundException;
+
+import javax.persistence.EntityNotFoundException;
 
 /**
  * @author : Burak KUTBAY
@@ -17,9 +21,9 @@ public class CustomExceptionHandler {
         return new ResponseEntity<String>(customerNotFoundException.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler(CustomerNotNullException.class)
+    @ExceptionHandler({NoHandlerFoundException.class, EntityNotFoundException.class,CustomerNotNullException.class})
     public ResponseEntity<String> customerNotNull(CustomerNotNullException customerNotNullException) {
-        return new ResponseEntity<String>(customerNotNullException.getMessage(), HttpStatus.NO_CONTENT);
+        return new ResponseEntity<String>(customerNotNullException.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
 
