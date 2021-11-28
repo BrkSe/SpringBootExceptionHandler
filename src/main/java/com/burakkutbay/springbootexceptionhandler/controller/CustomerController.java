@@ -3,6 +3,7 @@ package com.burakkutbay.springbootexceptionhandler.controller;
 
 
 import com.burakkutbay.springbootexceptionhandler.entity.Customer;
+import com.burakkutbay.springbootexceptionhandler.exception.CustomExceptionHandler;
 import com.burakkutbay.springbootexceptionhandler.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

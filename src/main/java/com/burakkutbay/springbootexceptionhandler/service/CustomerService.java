@@ -1,8 +1,8 @@
 package com.burakkutbay.springbootexceptionhandler.service;
 
 import com.burakkutbay.springbootexceptionhandler.entity.Customer;
-import com.burakkutbay.springbootexceptionhandler.exception.CustomExceptionHandler;
 import com.burakkutbay.springbootexceptionhandler.exception.CustomerNotFoundException;
+import com.burakkutbay.springbootexceptionhandler.exception.CustomerNotNullException;
 import com.burakkutbay.springbootexceptionhandler.repositroy.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,7 +21,11 @@ public class CustomerService {
     private CustomerRepository customerRepository;
 
     public Customer addCustomer(Customer customer) {
+        if (customer.getName().isBlank() || customer.getName().isEmpty()) {
+            throw new CustomerNotNullException("Customer Name Not Null");
+        }
         return customerRepository.save(customer);
+
     }
 
     public List<Customer> findAllCustomer() {
@@ -30,7 +34,7 @@ public class CustomerService {
 
     public Customer getCustomerById(Long customerId) {
         Optional<Customer> optionalCustomer = customerRepository.findById(customerId);
-        Customer customer = optionalCustomer.orElseThrow(() -> new CustomerNotFoundException("Student Not Found"));
+        Customer customer = optionalCustomer.orElseThrow(() -> new CustomerNotFoundException("Customer Not Found"));
         return customer;
     }
 

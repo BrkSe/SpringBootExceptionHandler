@@ -17,5 +17,10 @@ public class CustomExceptionHandler {
         return new ResponseEntity<String>(customerNotFoundException.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
+    @ExceptionHandler(CustomerNotNullException.class)
+    public ResponseEntity<String> customerNotNull(CustomerNotNullException customerNotNullException) {
+        return new ResponseEntity<String>(customerNotNullException.getMessage(), HttpStatus.NO_CONTENT);
+    }
+
 
 }
