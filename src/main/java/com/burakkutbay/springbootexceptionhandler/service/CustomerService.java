@@ -22,7 +22,7 @@ public class CustomerService {
 
     public Customer addCustomer(Customer customer) {
         if (customer.getName().isBlank() || customer.getName().isEmpty()) {
-            throw new CustomerNotNullException("Customer Name Not Null");
+            throw new CustomerNotNullException("Customer name must be not null");
         }
         return customerRepository.save(customer);
 
@@ -34,11 +34,14 @@ public class CustomerService {
 
     public Customer getCustomerById(Long customerId) {
         Optional<Customer> optionalCustomer = customerRepository.findById(customerId);
-        Customer customer = optionalCustomer.orElseThrow(() -> new CustomerNotFoundException("Customer Not Found"));
+        Customer customer = optionalCustomer.orElseThrow(() -> new CustomerNotFoundException(customerId + " "));
         return customer;
     }
 
     public void deleteCustomerById(Long customerId) {
+        Optional<Customer> optionalCustomer = customerRepository.findById(customerId);
+        Customer customer = optionalCustomer.orElseThrow(() -> new CustomerNotFoundException(customerId.toString()));
+
         customerRepository.deleteById(customerId);
     }
 
